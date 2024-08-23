@@ -6,6 +6,8 @@ coloracti="#154360"
 fontb='B nazanin'
 root=Tk()
 
+
+
 root.geometry('640x440')
 root.title('register form')
 root.configure(bg=colorbg,borderwidth=5,highlightthickness=7,highlightcolor=colorbgb)
@@ -57,6 +59,11 @@ r2.place(x=250,y=250)
 r3=Radiobutton(root,text='age 40-50',bg=colorbg,variable=inp,value='age 40-50',font=(fontb,14,'bold'))
 r3.place(x=400,y=250)
 
+btnDelete=Button(root,text='import',bd=6,fg=colorfg,bg=colorbg,font=(fontb,14,'bold'))
+btnDelete.place(x=100,y=330)
+
+btnDelete=Button(root,text='delete',bd=6,fg=colorfg,bg=colorbg,font=(fontb,14,'bold'))
+btnDelete.place(x=200,y=330)
 
 
 mainloop()
