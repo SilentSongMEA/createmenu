@@ -7,7 +7,64 @@ fontb='B nazanin'
 root=Tk()
 
 
+import sqlite3
+con=sqlite3.connect("form.db")
+c=con.cursor()
 
+
+
+def ckst(i,o,p):
+    global a
+    global b
+    global c
+    if i==1:
+        a='وب'
+    else:
+        a=''
+    if o==1:
+        b='شبکه'
+    else:
+        b=''
+    if p==1:
+        c='برنامه نویسی'
+    else:
+        c=''
+    return(i,o,p)
+
+def imp():
+    x=inp1.get()
+    y=inp2.get()
+    z=inp3.get()
+    q=ckst(x,y,z)
+    d=inp.get()
+    dsp1=Label(root,fg=colorfg,bg=colorbg,height=8,width=25,font=(fontb,14,'bold'))
+    dsp1.place(x=300,y=400)
+    dsp2=Label(root,text=entcodem.get()+('\n'+entname.get())+('\n'+entlast.get())+('\n'+a)+('\n'+b)+('\n'+c)+('\n'+d),fg=colorfg,bg=colorbg,height=8,width=25,font=(fontb,14,'bold'))
+    dsp2.place(x=300,y=400)
+    t1=[(entcodem.get()),entname.get(),entlast.get(),a,b,c,d]
+    c.execute('''INSERT INTO user VALUES(?,?,?,?,?,?,?)''',t1)
+    con.commit()
+
+def dell():
+    desp1=Label(root,fg=colorfg,bg=colorbg,height=8,width=25,font=(fontb,14,'bold'))
+    desp1.place(x=300,y=400)
+    y=[]
+    c.execute("SELECT * from user")
+    o=(c.fetchall())
+    z=entcodem.get()
+    for i in o:
+        y.append(i[0])
+
+    if z in y:
+        z=[entcodem.get()]
+        c.execute("DELETE FROM user WHERE code=? ;",z)
+        desp2=Label(root,text="delete",fg=colorfg,bg=colorbg,height=8,width=25,font=(fontb,14,'bold'))
+        desp2.place(x=300,y=350)
+        con.commit()
+    else:
+        desp2=Label(root,text="dont exits this code",fg=colorfg,bg=colorbg,height=8,width=25,font=(fontb,14,'bold'))
+        desp2.place(x=300,y=350)
+        
 root.geometry('640x440')
 root.title('register form')
 root.configure(bg=colorbg,borderwidth=5,highlightthickness=7,highlightcolor=colorbgb)
@@ -59,10 +116,10 @@ r2.place(x=250,y=250)
 r3=Radiobutton(root,text='age 40-50',bg=colorbg,variable=inp,value='age 40-50',font=(fontb,14,'bold'))
 r3.place(x=400,y=250)
 
-btnDelete=Button(root,text='import',bd=6,fg=colorfg,bg=colorbg,font=(fontb,14,'bold'))
-btnDelete.place(x=100,y=330)
+btnimport=Button(root,text='import',bd=6,fg=colorfg,bg=colorbg,font=(fontb,14,'bold'),command=imp)
+btnimport.place(x=100,y=330)
 
-btnDelete=Button(root,text='delete',bd=6,fg=colorfg,bg=colorbg,font=(fontb,14,'bold'))
+btnDelete=Button(root,text='delete',bd=6,fg=colorfg,bg=colorbg,font=(fontb,14,'bold'),command=dell)
 btnDelete.place(x=200,y=330)
 
 
